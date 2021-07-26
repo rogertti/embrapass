@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor Custom</title>
+</head>
+<body id="main">
+    <form>
+        <textarea id="editor"></textarea>
+        <br>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="../ckeditor.js"></script>
+	<script src="js/sample.js"></script>
+    <script>
+        initSample();
+
+        $(document).ready(function () {
+            /*$(".getcke").click(function () {
+                var eldata = CKEDITOR.instances.editor.getData(); //best way
+                var elhtml = CKEDITOR.instances.editor.document.getBody().getHtml();
+                $(".response").html(eldata);
+            });*/
+
+            $("form").submit(function (e) {
+                e.preventDefault();
+
+                $.post("save.php", { editor: CKEDITOR.instances.editor.getData() }, function (data) {
+                    switch (data) {
+                    case 'true':
+                        /*$(".success-mail").fadeTo(fade, 0.1, function () {
+                            $(this).append("<b>Feito!</b> Os dados for&atilde;o salvos com sucesso.").fadeTo(fade, 1, function () {
+                                window.setTimeout("location.href='inicio'", 1000);
+                            });
+                        });*/
+                        console.log("true");
+                        break;
+
+                    default:
+                        /*$(".danger-mail").fadeTo(fade, 0.1, function () {
+                            $(this).append("<b>Erro!</b> " + data).fadeTo(fade, 1, function () {
+                                //window.setTimeout("location.href='inicio'", 1000);
+                            });
+                        });*/
+                        console.log("false");
+                        break;
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
